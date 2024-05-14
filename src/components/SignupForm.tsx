@@ -38,9 +38,11 @@ const SignupForm: React.FC = () => {
 
   const handleSubmit = async (values: any) => {
     try {
-      const response = await axios.post('http://localhost:3000/users/register', values);
-      console.log('Registration successful:', response.data);
-      navigate(`/dashboard?firstName=${values.firstName}`);
+      await axios.post('http://localhost:3000/users/register', values);
+      const firstName = values.firstName;
+
+      // Navigate to dashboard with firstName passed in state
+      navigate('/dashboard', { state: { firstName } });
 
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.message) {

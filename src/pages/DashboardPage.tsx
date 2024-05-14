@@ -3,9 +3,12 @@ import Dashboard from '../components/Dashboard';
 import { useLocation, useParams } from 'react-router-dom';
 
 const DashboardPage: React.FC = () => {
+    const location = useLocation();
+    const params = useParams<{ firstName: string }>();
+    const firstName = params.firstName || new URLSearchParams(location.search).get('firstName') || ''; 
   return (
     <div>
-      <Dashboard firstName={'Jane'} />{}
+       {firstName && <Dashboard firstName={firstName} />} {}
     </div>
   );
 };

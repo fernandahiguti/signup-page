@@ -4,10 +4,13 @@ import * as Yup from 'yup';
 import { Button, TextField, Grid, Typography, InputAdornment, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const SignupForm: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null); 
+  const navigate = useNavigate();
+
 
   const initialValues = {
     firstName: '',
@@ -37,6 +40,8 @@ const SignupForm: React.FC = () => {
     try {
       const response = await axios.post('http://localhost:3000/users/register', values);
       console.log('Registration successful:', response.data);
+      navigate(`/dashboard?firstName=${values.firstName}`);
+
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.message) {
         setError(error.response.data.message); 

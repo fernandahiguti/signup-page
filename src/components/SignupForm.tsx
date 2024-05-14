@@ -38,7 +38,7 @@ const SignupForm: React.FC = () => {
 
   const handleSubmit = async (values: any) => {
     try {
-      await axios.post('http://localhost:3000/users/register', values);
+      await axios.post(`${process.env.REACT_APP_API_URL}/users/register`, values);
       const firstName = values.firstName;
 
       // Navigate to dashboard with firstName passed in state

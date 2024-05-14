@@ -3,9 +3,11 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { Button, TextField, Grid, Typography, InputAdornment, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import axios from 'axios';
 
 const SignupForm: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null); 
 
   const initialValues = {
     firstName: '',
@@ -32,13 +34,22 @@ const SignupForm: React.FC = () => {
   });
 
   const handleSubmit = async (values: any) => {
-    return
+    try {
+      const response = await axios.post('http://localhost:3000/users/register', values);
+      console.log('Registration successful:', response.data);
+    } catch (error: any) {
+      if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message); 
+      } else {
+        setError('An error occurred during registration.'); 
+      }
+    }
   };
 
   return (
     <Grid container justifyContent="center" alignItems="center" style={{ minHeight: '80vh' }}>
       <Grid item xs={12} md={6}>
-        <Typography variant="h4" align="center" fontWeight={'bold'} gutterBottom>Nice to meet you</Typography>
+        <Typography variant="h4" align="center" fontWeight={'bold'} marginTop={'1.5rem'} gutterBottom>Nice to meet you</Typography>
         <Typography variant="subtitle1" align="center" gutterBottom style={{ marginBottom: '1.5rem' }}>We're excited to have you aboard</Typography>
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
           {({ errors, touched }) => (
@@ -102,6 +113,11 @@ const SignupForm: React.FC = () => {
             </Form>
           )}
         </Formik>
+        {error && (
+          <Typography variant="body1" color="error" align="center" gutterBottom>
+            {error}
+          </Typography>
+        )}
       </Grid>
     </Grid>
   );

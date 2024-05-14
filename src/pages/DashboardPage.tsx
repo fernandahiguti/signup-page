@@ -5,7 +5,6 @@ import { useLocation, useParams } from 'react-router-dom';
 const DashboardPage: React.FC = () => {
   return (
     <div>
-      <h1>Dashboard</h1>
       <Dashboard firstName={'Jane'} />{}
     </div>
   );

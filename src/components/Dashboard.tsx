@@ -5,11 +5,11 @@ interface Props {
 }
 
 const Dashboard: React.FC<Props> = ({ firstName }) => {
-  return (
-    <div>
-      <h1>Welcome, {firstName}</h1>
-    </div>
-  );
+    return (
+        <div style={{ textAlign: 'center', marginTop: '30vh', fontSize: '2rem' }}>
+          <h1 style={{ fontWeight: 'bold', fontStyle: 'italic' }}>Welcome, {firstName}</h1>
+        </div>
+      );
 };
 
 export default Dashboard;
